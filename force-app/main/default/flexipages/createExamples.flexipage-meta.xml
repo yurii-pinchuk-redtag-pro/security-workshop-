@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>createNoChecks</componentName>
+                <identifier>createNoChecks</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>createStripInaccessible</componentName>
+                <identifier>createStripInaccessible</identifier>
             </componentInstance>
         </itemInstances>
         <name>region1</name>
@@ -18,6 +20,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>createCRUDChecks</componentName>
+                <identifier>createCRUDChecks</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>createAsUser</componentName>
+                <identifier>c_createAsUser</identifier>
             </componentInstance>
         </itemInstances>
         <name>region2</name>
@@ -27,6 +36,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>createFLSChecks</componentName>
+                <identifier>createFLSChecks</identifier>
             </componentInstance>
         </itemInstances>
         <name>region3</name>

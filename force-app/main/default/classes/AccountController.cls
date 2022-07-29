@@ -35,6 +35,16 @@ public with sharing class AccountController {
   }
 
   @AuraEnabled(cacheable=true)
+  public static List<Account> getAccountsWithUserMode() {
+    return [
+      SELECT Name, AnnualRevenue, Industry
+      FROM Account
+      WITH USER_MODE
+      ORDER BY Name
+    ];
+  }
+
+  @AuraEnabled(cacheable=true)
   public static List<Account> getAccountsStripInaccessible() {
     SObjectAccessDecision securityDecision = Security.stripInaccessible(
       AccessType.READABLE,
@@ -88,7 +98,7 @@ public with sharing class AccountController {
   @AuraEnabled
   public static Account createAccount() {
     Account acct = new Account();
-    acct.Name = 'Cruzcampo';
+    acct.Name = UserInfo.getName(); 
     acct.AnnualRevenue = 1000000;
     acct.Industry = 'Food & Beverage';
 
@@ -102,7 +112,7 @@ public with sharing class AccountController {
     Account acct;
     if (Schema.sObjectType.Account.isCreateable()) {
       acct = new Account();
-      acct.Name = 'Cruzcampo';
+      acct.Name = UserInfo.getName(); 
       acct.AnnualRevenue = 1000000;
       acct.Industry = 'Food & Beverage';
 
@@ -123,7 +133,7 @@ public with sharing class AccountController {
       Schema.sObjectType.Account.fields.Industry.isCreateable()
     ) {
       acct = new Account();
-      acct.Name = 'Cruzcampo';
+      acct.Name = UserInfo.getName(); 
       acct.AnnualRevenue = 1000000;
       acct.Industry = 'Food & Beverage';
 
@@ -138,7 +148,7 @@ public with sharing class AccountController {
   @AuraEnabled
   public static Account createAccountStripInaccessible() {
     Account acct = new Account();
-    acct.Name = 'Cruzcampo';
+    acct.Name = UserInfo.getName(); 
     acct.AnnualRevenue = 1000000;
     acct.Industry = 'Food & Beverage';
 
@@ -150,5 +160,17 @@ public with sharing class AccountController {
     insert securityDecision.getRecords();
 
     return (Account) securityDecision.getRecords()[0];
+  }
+
+  @AuraEnabled
+  public static Account createAccountAsUser() {
+    Account acct = new Account();
+    acct.Name = UserInfo.getName(); 
+    acct.AnnualRevenue = 1000000;
+    acct.Industry = 'Food & Beverage';
+
+    insert as user acct;
+
+    return acct;
   }
 }
